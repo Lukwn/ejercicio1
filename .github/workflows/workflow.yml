@@ -1,0 +1,39 @@
+name: Ejercicio 1
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Tarea1:
+    runs-on: [windows-latest, ubuntu-latest]
+
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    - name: Configure
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.11"
+        
+    - name: Exe command
+      run: |
+        python3 -m unittest discover -s . -p test_app.py
+        
+  Tarea2:
+    runs-on: ubuntu-latest
+    needs:
+      - Tarea1
+    steps:
+    # 1. Checkout the repository
+    - name: Checkout code
+      uses: actions/checkout@v3
+      
+    -name: Lint
+      uses: lukacat10/Flake8@v5
